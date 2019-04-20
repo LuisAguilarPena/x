@@ -3,11 +3,52 @@ const tasksRoutes = express.Router()
 const getConnection = require('./getConnection.js')
 
 // Displays all tasks in database
-tasksRoutes.get('/tasks', (req, res) => {
-  getConnection().query("SELECT * FROM Tasks", (err, rows, fields) => { 
-    res.json(rows) 
-  })
-})
+getInfoFromDatabase = (callback) => {
+  getConnection().query('SELECT * FROM Tasks', (err, data) => {
+    if(err){
+      callback(err, null);
+    }else{
+      callback(null, data)
+    }
+  });
+};
+tasksRoutes.get('/tasks', function(req, res){
+  getInfoFromDatabase(function(err, data){
+    if(err){
+      res.sendStatus(500)
+    }else{
+      res.json(data)
+    }
+  });
+});
+// post
+insertOne = (task, cb) => {
+  getConnection().query('INSERT INTO Task (task) VALUES(?)',
+[task], (err, results, fields )=>{
+  if(err) {
+      cb(err, null);
+    } else {
+      console.log(results);
+      cb(null, results);
+    }
+ });
+};
+tasksRoutes.post('/tasks',function(req,res){
+  const task = req.body.task;
+  if(!task){
+    res.sendStatus(400);
+    console.log(task);
+  }else{
+    databaseInfo.insertOne(task, (err, results)=>{
+      if(err){
+        res.sendStatus(500);
+        console.log(err);
+      }else{
+        res.status(200).json(results);
+      }
+    });
+  }
+});
 
 // Displays an specific task in database
 tasksRoutes.get('/tasks/:id', (req, res) => {

@@ -43,7 +43,7 @@ export default class AddTask extends Component {
 			method: 'GET',
 			success:(data)=>{
 				this.setState({list:data});
-				console.log(data);
+				console.log(`This is what currently is listed in Database:`, data);
 			},
 			error:(xhr, err)=>{
 			console.log('you have an err', err);
