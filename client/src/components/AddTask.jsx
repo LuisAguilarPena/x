@@ -36,6 +36,21 @@ export default class AddTask extends Component {
 		})
 	}
 
+	//post method to send data to the server wich will be than transfered to the database
+	addTask(task){
+		console.log(task);
+		$.ajax({
+			method: 'POST',
+			url: '/tasks',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				task:task
+			})
+		}).done(()=>{
+			this.getData();
+		});
+	}
+
 	//gets data from the server that was retrieved from database
 	getData(){
 		$.ajax({

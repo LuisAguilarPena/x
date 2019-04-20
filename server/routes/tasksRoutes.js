@@ -23,7 +23,7 @@ tasksRoutes.get('/tasks', function(req, res){
 });
 // post
 insertOne = (task, cb) => {
-  getConnection().query('INSERT INTO Task (task) VALUES(?)',
+  getConnection().query('INSERT INTO Tasks (task) VALUES(?)',
 [task], (err, results, fields )=>{
   if(err) {
       cb(err, null);
@@ -39,7 +39,7 @@ tasksRoutes.post('/tasks',function(req,res){
     res.sendStatus(400);
     console.log(task);
   }else{
-    databaseInfo.insertOne(task, (err, results)=>{
+    insertOne(task, (err, results)=>{
       if(err){
         res.sendStatus(500);
         console.log(err);
