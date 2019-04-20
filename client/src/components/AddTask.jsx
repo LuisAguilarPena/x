@@ -36,21 +36,6 @@ export default class AddTask extends Component {
 		})
 	}
 
-	//post method to send data to the server wich will be than transfered to the database
-	addTask(task){
-		$.ajax({
-			method: 'POST',
-			url: '/task',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				task:task
-			})
-		}).done(()=>{
-			this.getData();
-		});
-
-	}
-
 	//gets data from the server that was retrieved from database
 	getData(){
 		$.ajax({
@@ -71,25 +56,20 @@ this.getData();
 	render() {
 		return (
 			<div>
-				<center>
-					<h1>Task Board</h1>
-					<div>
-						<input
-							placeholder = "Enter a new task"
-							// handle the user input 
-							onChange={ (e)=>this.changeUserInput(e.target.value)}
-							// set value to the userInput from state
-							value={this.state.userInput}
-							type="text"
-						/>
-						{/* onClick so when the submit button is clicked the input and be saved */}
-						<button onClick={()=> this.addTask(this.state.userInput)}>Add Task</button>
-						<ul>
-							{/*iterate through list and return it so its displayed*/}
-							{this.state.list.map( (val)=> <li>{val.task}</li>)}
-						</ul>
-					</div>
-				</center>
+				<input
+					placeholder = "Enter a new task"
+					// handle the user input 
+					onChange={ (e)=>this.changeUserInput(e.target.value)}
+					// set value to the userInput from state
+					value={this.state.userInput}
+					type="text"
+				/>
+				{/* onClick so when the submit button is clicked the input and be saved */}
+				<button onClick={()=> this.addTask(this.state.userInput)}>Add Task</button>
+				<ul>
+					{/*iterate through list and return it so its displayed*/}
+					{this.state.list.map( (val)=> <li>{val.task}</li>)}
+				</ul>
 			</div>
 		);
 	}
