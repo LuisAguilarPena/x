@@ -12,8 +12,8 @@ getInfoFromDatabase = (callback) => {
     }
   });
 };
-tasksRoutes.get('/tasks', function(req, res){
-  getInfoFromDatabase(function(err, data){
+tasksRoutes.get('/tasks', (req, res) => {
+  getInfoFromDatabase((err, data) => {
     if(err){
       res.sendStatus(500)
     }else{
@@ -24,7 +24,7 @@ tasksRoutes.get('/tasks', function(req, res){
 // post
 insertOne = (task, cb) => {
   getConnection().query('INSERT INTO Tasks (task) VALUES(?)',
-[task], (err, results, fields )=>{
+[task], (err, results, fields ) => {
   if(err) {
       cb(err, null);
     } else {
@@ -33,13 +33,13 @@ insertOne = (task, cb) => {
     }
  });
 };
-tasksRoutes.post('/tasks',function(req,res){
+tasksRoutes.post('/tasks', (req,res) => {
   const task = req.body.task;
   if(!task){
     res.sendStatus(400);
     console.log(task);
   }else{
-    insertOne(task, (err, results)=>{
+    insertOne(task, (err, results) => {
       if(err){
         res.sendStatus(500);
         console.log(err);
